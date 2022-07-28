@@ -17,10 +17,17 @@ pipeline {
         }
 
 
-        stage ('Deployment Stage') {
-            steps {
-                sh 'mvn deploy'
-            }
+        stage ('Publish Test Results') {
+			steps {
+						
+						
+			junit 'target/surefire-reports/*.xml'
+			}
         }
+        stage ('Execute Jar File') {
+			steps{
+				sh 'java -jar target/*.jar'
+			}
+		}
     }
 }
