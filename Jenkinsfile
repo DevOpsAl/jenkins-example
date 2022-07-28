@@ -1,33 +1,38 @@
-pipeline {
-    agent any
-
-    stages {
-        stage ('Compile Stage') {
-
-            steps {
-                sh 'mvn clean compile'
-            }
-        }
-
-        stage ('Testing Stage') {
-
-            steps {
-                sh 'mvn test'
-            }
-        }
-
-
-        stage ('Publish Test Results') {
-			steps {
-						
-						
-			junit 'workspace/Test Pipeline3/target/surefire-reports/*.xml'
+pipeline{
+	agent any
+	stages {
+		stage ('SCM for Java Code') {
+			steps{
+				git changelong: false, url: 'https://github.com/DevOpsAl/jenkins-example.git'
 			}
-        }
-        stage ('Execute Jar File') {
+		}
+		stage ('Maven Compile') {
+			steps{
+				sh 'mvn clean compile'
+			}
+		}
+		stage ('Testing Code') {
+			steps{
+				sh '''mvn test'''
+				
+			}
+		}
+		stage ('Package') {
+			steps{
+			sh 'mvn package'
+			}
+		}
+		stage ('Publish Test Results') {
+			steps {
+			
+			
+			junit 'target/surefire-reports/*.xml'
+			}
+		}
+		stage ('Execute Jar File') {
 			steps{
 				sh 'java -jar target/*.jar'
 			}
 		}
-    }
+	}
 }
