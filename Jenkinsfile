@@ -3,7 +3,7 @@ pipeline{
 	stages {
 		stage ('SCM for Java Code') {
 			steps{
-				git changelong: false, url: 'https://github.com/DevOpsAl/jenkins-example.git'
+				git changelog: false, url: 'https://github.com/DevOpsAl/jenkins-example.git'
 			}
 		}
 		stage ('Maven Compile') {
