@@ -21,7 +21,7 @@ pipeline {
 			steps {
 						
 						
-			junit 'target/surefire-reports/*.xml'
+			junit 'workspace/Test Pipeline3/target/surefire-reports/*.xml'
 			}
         }
         stage ('Execute Jar File') {
